@@ -9,8 +9,7 @@
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
-            <version>7.1.1.jre10-preview</version>
-            <scope>test</scope>
+            <version>7.1.1.jre8-preview</version>
         </dependency>
         <dependency>
             <groupId>com.microsoft.azure</groupId>
