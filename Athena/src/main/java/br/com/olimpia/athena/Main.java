@@ -1,13 +1,13 @@
 package br.com.olimpia.athena;
 
-import br.com.olimpia.athena.handlers.Processor;
+import br.com.olimpia.athena.handler.Computer;
+
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        
-        Processor processador = new Processor();
-
-        System.out.println(processador.getName());    
+        Computer info = new Computer();
+        System.out.println(info.getCpuName()+"\n"+info.getCpuUsage()+"\n"+info.getRamTotal()+
+                "\n"+info.getRamUsage()+"\n"+info.getRamAvailable()+"\n"+info.getHDTotal());
     }
 }
