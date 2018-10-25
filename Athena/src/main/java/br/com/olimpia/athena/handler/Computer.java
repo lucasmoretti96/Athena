@@ -16,60 +16,65 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import oshi.hardware.HWDiskStore;
 
-public class Computer {
+public class Computer implements Interface.IController {
 
-    private double cpuUsage;
+    private double cpuUsagePorcentage;
     private String cpuName;
+    private double cpuTemperature;
     private long ramTotal;
     private long ramUsage;
     private long ramAvailable;
     private long hdTotal;
-    private long hdUsage;
-    
-    SystemInfo si = new SystemInfo();
-    OperatingSystem os = si.getOperatingSystem();
-    HardwareAbstractionLayer hal = si.getHardware();
-    
-    public double getCpuUsage() {
-        cpuUsage = hal.getProcessor().getSystemCpuLoadBetweenTicks();
-        return cpuUsage;
+    private long computerUsageTime;
+
+    public double getCpuUsagePorcentage() {
+        cpuUsagePorcentage = hal.getProcessor().getSystemCpuLoadBetweenTicks();
+        cpuUsagePorcentage = cpuUsagePorcentage*100;
+        
+        return cpuUsagePorcentage;
     }
-    
+
     public String getCpuName() {
         cpuName = hal.getProcessor().getName();
         return cpuName;
     }
-    
+
+    public double getCpuTemperature() {
+        cpuTemperature = si.getHardware().getSensors().getCpuTemperature();
+        return cpuTemperature;
+    }
+
     public long getRamTotal() {
         ramTotal = hal.getMemory().getTotal();
         return ramTotal;
     }
-    
+
     public long getRamUsage() {
-        ramUsage = hal.getMemory().getSwapUsed();
+        ramUsage = (hal.getMemory().getTotal() - hal.getMemory().getAvailable());
         return ramUsage;
     }
-    
+
     public long getRamAvailable() {
         ramAvailable = hal.getMemory().getAvailable();
         return ramAvailable;
     }
-    
+
     public long getHDTotal() {
-        hdTotal = si.getOperatingSystem().getProcess(0).getBytesRead();
+        
+        List<Long> hds = new ArrayList<>();
+        
+        HWDiskStore[] disks = hal.getDiskStores();
+        for (HWDiskStore disk : disks) {
+           hds.add(disk.getSize());
+        }
+        for (int i = 0; i < hds.size(); i++) {
+            hdTotal = (hdTotal + hds.get(i));
+        }
         return hdTotal;
     }
     
-    public long getHDUsage() {
-        hdUsage = si.getOperatingSystem().getProcess(0).getBytesRead();
-        return hdUsage;
-    }
-    
-    public void getHD() {
-        List<Long> hd = new ArrayList<>();
-        HWDiskStore[] disks = hal.getDiskStores();
-        for (HWDiskStore disk : disks) {
-            hd.add(disk.getSize());
-        }
+    public long getComputerUsageTime(){
+        computerUsageTime = hal.getProcessor().getSystemUptime();
+        return computerUsageTime;
     }
 }
