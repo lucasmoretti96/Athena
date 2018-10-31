@@ -115,6 +115,6 @@ public class Computer implements Interface.IController {
 
                     FormatUtil.formatBytes(p.getResidentSetSize()), p.getName());
         }
-        return (List<OSProcess>) p;
+        return procs;
     }
 }
