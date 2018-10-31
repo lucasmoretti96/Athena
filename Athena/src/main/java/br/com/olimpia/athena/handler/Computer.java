@@ -1,5 +1,6 @@
 package br.com.olimpia.athena.handler;
 
+import Statements.MachinesRepository;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +34,11 @@ public class Computer implements Interface.IController {
 
     public String getCpuName() {
         cpuName = hal.getProcessor().getName();
+        MachinesRepository repository = new MachinesRepository();
+        repository.inserirRegistro(cpuName);
+//        repository.inserirRegistro(cpuName);
+//        repository.inserirRegistro(cpuName);
+        repository.desconectar();
         return cpuName;
     }
 
