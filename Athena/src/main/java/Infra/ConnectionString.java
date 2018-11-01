@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 public class ConnectionString {
     private final String connectionString = "jdbc:sqlserver://athenaproject.database.windows.net:1433;database=AthenaTESTE;user=master@athenaproject;password=Athena_coruja;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
     
-    public Connection criarConexao() {
+    public Connection createConnection() {
         Connection conn;
         try {
             conn = DriverManager.getConnection(connectionString);

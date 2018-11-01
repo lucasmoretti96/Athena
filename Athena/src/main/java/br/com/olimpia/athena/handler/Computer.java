@@ -34,11 +34,8 @@ public class Computer implements Interface.IController {
 
     public String getCpuName() {
         cpuName = hal.getProcessor().getName();
-        MachinesRepository repository = new MachinesRepository();
-        repository.inserirRegistro(cpuName);
-//        repository.inserirRegistro(cpuName);
-//        repository.inserirRegistro(cpuName);
-        repository.desconectar();
+        repository.insertCpuName(cpuName);
+        repository.disconnect();
         return cpuName;
     }
 
@@ -49,6 +46,8 @@ public class Computer implements Interface.IController {
 
     public long getRamTotal() {
         ramTotal = hal.getMemory().getTotal();
+        repository.insertRamTotal(ramTotal);
+        repository.disconnect();
         return ramTotal;
     }
 
@@ -62,7 +61,7 @@ public class Computer implements Interface.IController {
         return ramAvailable;
     }
 
-    public long getHDTotal() {
+    public String getHDTotal() {
         
         List<Long> hds = new ArrayList<>();
         
@@ -73,7 +72,8 @@ public class Computer implements Interface.IController {
         for (int i = 0; i < hds.size(); i++) {
             hdTotal = (hdTotal + hds.get(i));
         }
-        return hdTotal;
+        
+        return FormatUtil.formatBytesDecimal(hdTotal);
     }
     
     public long getComputerUsageTime(){

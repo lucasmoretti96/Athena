@@ -20,7 +20,7 @@ public class Main{
         System.out.println("Memória RAM Usada: "+FormatUtil.formatBytesDecimal(info.getRamUsage()));
         System.out.println("Memória RAM Disponível: "+FormatUtil.formatBytesDecimal(info.getRamAvailable()));
         System.out.println("----HD------------");
-        System.out.println("Memória Total do HD: "+FormatUtil.formatBytesDecimal(info.getHDTotal()));
+        System.out.println("Memória Total do HD: "+info.getHDTotal());
         System.out.println("Informações Gerais HD: ");
         System.out.println(Arrays.toString(info.getHDFilesStoresSizes()));
         System.out.println("----Sistema Operacional----------");
