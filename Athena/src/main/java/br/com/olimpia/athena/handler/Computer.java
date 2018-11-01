@@ -1,5 +1,6 @@
 package br.com.olimpia.athena.handler;
 
+import Statements.MachinesRepository;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +34,8 @@ public class Computer implements Interface.IController {
 
     public String getCpuName() {
         cpuName = hal.getProcessor().getName();
+        repository.insertCpuName(cpuName);
+        repository.disconnect();
         return cpuName;
     }
 
@@ -43,6 +46,8 @@ public class Computer implements Interface.IController {
 
     public long getRamTotal() {
         ramTotal = hal.getMemory().getTotal();
+        repository.insertRamTotal(ramTotal);
+        repository.disconnect();
         return ramTotal;
     }
 
@@ -56,7 +61,7 @@ public class Computer implements Interface.IController {
         return ramAvailable;
     }
 
-    public long getHDTotal() {
+    public String getHDTotal() {
         
         List<Long> hds = new ArrayList<>();
         
@@ -67,7 +72,8 @@ public class Computer implements Interface.IController {
         for (int i = 0; i < hds.size(); i++) {
             hdTotal = (hdTotal + hds.get(i));
         }
-        return hdTotal;
+        
+        return FormatUtil.formatBytesDecimal(hdTotal);
     }
     
     public long getComputerUsageTime(){
