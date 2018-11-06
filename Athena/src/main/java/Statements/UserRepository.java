@@ -9,6 +9,6 @@ package Statements;
  *
  * @author Aluno
  */
-public class tbRealTimeMachinesRepository {
+public class UserRepository {
     
 }

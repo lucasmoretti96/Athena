@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ConnectionString {
-    private final String connectionString = "jdbc:sqlserver://athenaproject.database.windows.net:1433;database=AthenaTESTE;user=master@athenaproject;password=Athena_coruja;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+    private final String connectionString = "jdbc:sqlserver://athenaproject.database.windows.net:1433;database=teste;user=master@athenaproject;password=Athena_coruja;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
     
     public Connection createConnection() {
         Connection conn;
