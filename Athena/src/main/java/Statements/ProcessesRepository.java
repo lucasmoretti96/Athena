@@ -9,6 +9,6 @@ package Statements;
  *
  * @author Aluno
  */
-public class Querys {
+public class ProcessesRepository {
     
 }
