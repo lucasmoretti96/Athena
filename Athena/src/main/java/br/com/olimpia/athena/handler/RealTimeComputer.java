@@ -1,10 +1,8 @@
 package br.com.olimpia.athena.handler;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Arrays;
 import oshi.hardware.GlobalMemory;
-import oshi.hardware.HWDiskStore;
 import oshi.software.os.OSFileStore;
 import oshi.software.os.OSProcess;
 import oshi.software.os.OperatingSystem;

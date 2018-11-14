@@ -14,7 +14,7 @@ public class RealTimeMachinesRepository {
         return new ConnectionString().createConnection();
     }
     
-    public void insertComputerActualData(RealTimeComputer realTimeComputer) throws SQLException{
+    public void insertComputerActualData(RealTimeComputer realTimeComputer) throws SQLException, InterruptedException{
         try{
             while(true){
                 PreparedStatement query = RealTimeMachinesRepository().prepareStatement("insert into xxx (cpuUsagePorcentage, cpuTemperature, ramUsage, ramAvailable, computerUsageTime, hdsDetails) values(?,?,?,?,?,?)");
@@ -25,9 +25,10 @@ public class RealTimeMachinesRepository {
                 query.setLong(5, realTimeComputer.getComputerUsageTime());
                 //query.setXXX(6, computer.getHdsDetails());
                 query.execute();
-                disconnect();
+                Thread.sleep(3000);
             }
         }catch(SQLException ex){
+            disconnect();
             Logger.getLogger(RealTimeMachinesRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
