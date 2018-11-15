@@ -136,6 +136,7 @@ public class RealTimeComputer implements Interface.IController{
                     100d * p.getResidentSetSize() / memory.getTotal(), FormatUtil.formatBytes(p.getVirtualSize()),
                     FormatUtil.formatBytes(p.getResidentSetSize()), p.getName());
         }
+        //procs.toString();
         return procs;
     }
 }

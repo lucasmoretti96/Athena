@@ -10,31 +10,34 @@ import java.util.logging.Logger;
 
 public class RealTimeMachinesRepository {
     
-    public Connection RealTimeMachinesRepository(){
-        return new ConnectionString().createConnection();
-    }
+    Connection conn = new ConnectionString().createConnection();
     
     public void insertComputerActualData(RealTimeComputer realTimeComputer) throws SQLException, InterruptedException{
-        try{
-            while(true){
-                PreparedStatement query = RealTimeMachinesRepository().prepareStatement("insert into xxx (cpuUsagePorcentage, cpuTemperature, ramUsage, ramAvailable, computerUsageTime, hdsDetails) values(?,?,?,?,?,?)");
+        try{    
+                PreparedStatement query = conn.prepareStatement("insert into CpuInf (CpuUsage, CpuTemperature) values(?,?)");
                 query.setDouble(1, realTimeComputer.getCpuUsagePorcentage());
                 query.setDouble(2,realTimeComputer.getCpuTemperature());
-                query.setLong(3, realTimeComputer.getRamUsage());
-                query.setLong(4, realTimeComputer.getRamAvailable());
-                query.setLong(5, realTimeComputer.getComputerUsageTime());
-                //query.setXXX(6, computer.getHdsDetails());
                 query.execute();
-                Thread.sleep(3000);
-            }
+                query.getConnection().commit();
+                
+                PreparedStatement query2 = conn.prepareStatement("insert into RamMemoryInf (RamUsage, RamAvailable) values(?,?)");
+                query2.setLong(1, realTimeComputer.getRamUsage());
+                query2.setLong(2, realTimeComputer.getRamAvailable());
+                query2.execute();
+                PreparedStatement query3 = conn.prepareStatement("insert into TIMEUSAGEINF (TimeUsage) values(?) ");
+                query3.setLong(1, realTimeComputer.getComputerUsageTime());
+                query3.execute();
+                //query.setXXX(6, computer.getHdsDetails())
         }catch(SQLException ex){
-            disconnect();
+            disconnect(conn);
             Logger.getLogger(RealTimeMachinesRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }finally{
+        disconnect(conn);
     }
-     public void disconnect() {
+    }
+     public void disconnect(Connection conn) {
         try {
-            RealTimeMachinesRepository().close();
+            conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(MachinesRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
