@@ -30,6 +30,7 @@ public class Main{
         System.out.println("Memória RAM Disponível: "+FormatUtil.formatBytesDecimal(info2.getRamAvailableOshi()));
         System.out.println("----HD------------");
         System.out.println("Memória Total do HD: "+info.getHDTotalOshi());
+        System.out.println("Memória Usada do HD: "+info2.getHdUsageOshi());
         System.out.println("Informações Gerais HD: ");
         System.out.println(Arrays.toString(info2.getHDFilesStoresSizesOshi()));
         System.out.println("----Sistema Operacional----------");
