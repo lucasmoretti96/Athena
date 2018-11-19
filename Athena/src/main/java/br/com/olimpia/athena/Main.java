@@ -14,10 +14,14 @@ import oshi.util.FormatUtil;
 public class Main{
     public static void main(String[] args) throws InterruptedException, SQLException {
         
-        while(true){
         Computer info = new Computer();
-        RealTimeComputer info2 = new RealTimeComputer();
         MachinesRepository repository = new MachinesRepository();
+        Computer machine1= info.getComputerActual();
+        boolean insertresponse = repository.insertComputerActualStaticData(machine1);
+        System.out.println(insertresponse);
+        
+        while(true){
+        RealTimeComputer info2 = new RealTimeComputer();
         RealTimeMachinesRepository repository2 = new RealTimeMachinesRepository();
         System.out.println("----Processador-------");
         System.out.println("Marca: "+info.getCpuNameOshi());
@@ -40,11 +44,7 @@ public class Main{
         System.out.println("--------Processos------------------");
         System.out.println("Processos sendo executados na máquina: ");
         //System.out.println(info2.getComputerProcessesOshi(os, hal.getMemory()));
-        
-        
-        Computer machine1= info.getComputerActual();
-        boolean insertresponse = repository.insertComputerActualStaticData(machine1);
-        System.out.println(insertresponse);
+  
         RealTimeComputer machine2 = info2.getRealTimeComputer();
         repository2.insertComputerActualData(machine2);
         Thread.sleep(5000);

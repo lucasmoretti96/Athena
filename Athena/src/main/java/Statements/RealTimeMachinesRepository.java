@@ -28,7 +28,7 @@ public class RealTimeMachinesRepository {
                 query3.setLong(1, realTimeComputer.getComputerUsageTime());
                 query3.execute();
                 
-                PreparedStatement query4 = conn.prepareStatement("insert into xxx (xxx,xxx) values(?,?)");
+                PreparedStatement query4 = conn.prepareStatement("insert into HardDiskInf (HdTotal, HdUsage) values(?,?)");
                 query4.setLong(1, realTimeComputer.getHdTotal());
                 query4.setLong(2, realTimeComputer.getHdUsage());
                 query4.execute();                
