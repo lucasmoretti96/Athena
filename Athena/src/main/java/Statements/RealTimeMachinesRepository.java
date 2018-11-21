@@ -18,16 +18,20 @@ public class RealTimeMachinesRepository {
                 query.setDouble(1, realTimeComputer.getCpuUsagePorcentage());
                 query.setDouble(2,realTimeComputer.getCpuTemperature());
                 query.execute();
-                query.getConnection().commit();
                 
                 PreparedStatement query2 = conn.prepareStatement("insert into RamMemoryInf (RamUsage, RamAvailable) values(?,?)");
                 query2.setLong(1, realTimeComputer.getRamUsage());
                 query2.setLong(2, realTimeComputer.getRamAvailable());
                 query2.execute();
-                PreparedStatement query3 = conn.prepareStatement("insert into TIMEUSAGEINF (TimeUsage) values(?) ");
+                
+                PreparedStatement query3 = conn.prepareStatement("insert into TIMEUSAGEINF (TimeUsage) values(?)");
                 query3.setLong(1, realTimeComputer.getComputerUsageTime());
                 query3.execute();
-                //query.setXXX(6, computer.getHdsDetails())
+                
+                PreparedStatement query4 = conn.prepareStatement("insert into HardDiskInf (HdTotal, HdUsage) values(?,?)");
+                query4.setLong(1, realTimeComputer.getHdTotal());
+                query4.setLong(2, realTimeComputer.getHdUsage());
+                query4.execute();                
         }catch(SQLException ex){
             disconnect(conn);
             Logger.getLogger(RealTimeMachinesRepository.class.getName()).log(Level.SEVERE, null, ex);

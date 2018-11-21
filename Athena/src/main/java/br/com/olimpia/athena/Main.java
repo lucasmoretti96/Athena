@@ -14,10 +14,14 @@ import oshi.util.FormatUtil;
 public class Main{
     public static void main(String[] args) throws InterruptedException, SQLException {
         
-        while(true){
         Computer info = new Computer();
-        RealTimeComputer info2 = new RealTimeComputer();
         MachinesRepository repository = new MachinesRepository();
+        Computer machine1= info.getComputerActual();
+        boolean insertresponse = repository.insertComputerActualStaticData(machine1);
+        System.out.println(insertresponse);
+        
+        while(true){
+        RealTimeComputer info2 = new RealTimeComputer();
         RealTimeMachinesRepository repository2 = new RealTimeMachinesRepository();
         System.out.println("----Processador-------");
         System.out.println("Marca: "+info.getCpuNameOshi());
@@ -30,6 +34,7 @@ public class Main{
         System.out.println("Memória RAM Disponível: "+FormatUtil.formatBytesDecimal(info2.getRamAvailableOshi()));
         System.out.println("----HD------------");
         System.out.println("Memória Total do HD: "+info.getHDTotalOshi());
+        System.out.println("Memória Usada do HD: "+info2.getHdUsageOshi());
         System.out.println("Informações Gerais HD: ");
         System.out.println(Arrays.toString(info2.getHDFilesStoresSizesOshi()));
         System.out.println("----Sistema Operacional----------");
@@ -39,11 +44,7 @@ public class Main{
         System.out.println("--------Processos------------------");
         System.out.println("Processos sendo executados na máquina: ");
         //System.out.println(info2.getComputerProcessesOshi(os, hal.getMemory()));
-        
-        
-        Computer machine1= info.getComputerActual();
-        boolean insertresponse = repository.insertComputerActualStaticData(machine1);
-        System.out.println(insertresponse);
+  
         RealTimeComputer machine2 = info2.getRealTimeComputer();
         repository2.insertComputerActualData(machine2);
         Thread.sleep(5000);

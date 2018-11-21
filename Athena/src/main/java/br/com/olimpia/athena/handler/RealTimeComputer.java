@@ -16,6 +16,8 @@ public class RealTimeComputer implements Interface.IController{
     private OSFileStore[] hdsDetails;
     private double cpuTemperature;
     private double cpuUsagePorcentage;
+    private long hdTotal;
+    private long hdUsage;
     
     public RealTimeComputer(){
     }
@@ -26,13 +28,17 @@ public class RealTimeComputer implements Interface.IController{
             long ramAvailable, 
             double cpuUsagePorcentage, 
             double cpuTemperature,
-            OSFileStore[] hdsDetails){
+            OSFileStore[] hdsDetails,
+            long hdTotal,
+            long hdUsage){
         this.computerUsageTime = computerUsageTime;
         this.ramUsage = ramUsage;
         this.ramAvailable = ramAvailable;
         this.cpuUsagePorcentage = cpuUsagePorcentage;
         this.cpuTemperature = cpuTemperature;
         this.hdsDetails = hdsDetails;
+        this.hdTotal = hdTotal;
+        this.hdUsage = hdUsage;
     }
     public RealTimeComputer getRealTimeComputer(){
         return new RealTimeComputer(
@@ -41,7 +47,15 @@ public class RealTimeComputer implements Interface.IController{
                 getRamAvailableOshi(),
                 getCpuUsagePorcentageOshi(),
                 getCpuTemperatureOshi(),
-                getHDFilesStoresSizesOshi());
+                getHDFilesStoresSizesOshi(),
+                getHdTotalOshi(),
+                getHdUsageOshi());
+    }
+        public long getHdTotal(){
+        return hdTotal;
+    }
+        public long getHdUsage(){
+        return hdUsage;
     }
         public double getCpuUsagePorcentage() {
         return cpuUsagePorcentage;
@@ -139,4 +153,15 @@ public class RealTimeComputer implements Interface.IController{
         //procs.toString();
         return procs;
     }
+       public long getHdTotalOshi(){
+           OSFileStore[] fileStores = si.getOperatingSystem().getFileSystem().getFileStores();
+           return hdTotal = fileStores[0].getTotalSpace() + fileStores[1].getTotalSpace();
+       }
+       public long getHdUsageOshi(){
+           OSFileStore[] fileStores = si.getOperatingSystem().getFileSystem().getFileStores();
+           long total = fileStores[0].getTotalSpace() + fileStores[1].getTotalSpace();
+           long usage = fileStores[1].getUsableSpace() + fileStores[1].getUsableSpace();
+           hdUsage = (total-usage);
+           return hdUsage;
+       }
 }
