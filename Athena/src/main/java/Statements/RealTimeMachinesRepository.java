@@ -12,25 +12,29 @@ public class RealTimeMachinesRepository {
     
     Connection conn = new ConnectionString().createConnection();
     
-    public void insertComputerActualData(RealTimeComputer realTimeComputer) throws SQLException, InterruptedException{
+    public void insertComputerActualData(RealTimeComputer realTimeComputer, int idMachine) throws SQLException, InterruptedException{
         try{    
-                PreparedStatement query = conn.prepareStatement("insert into CpuInf (CpuUsage, CpuTemperature) values(?,?)");
-                query.setDouble(1, realTimeComputer.getCpuUsagePorcentage());
-                query.setDouble(2,realTimeComputer.getCpuTemperature());
+                PreparedStatement query = conn.prepareStatement("insert into CpuInf (idMachines, CpuUsage, CpuTemperature) values(?,?,?)");
+                query.setInt(1, idMachine);
+                query.setDouble(2, realTimeComputer.getCpuUsagePorcentage());
+                query.setDouble(3,realTimeComputer.getCpuTemperature());
                 query.execute();
                 
-                PreparedStatement query2 = conn.prepareStatement("insert into RamMemoryInf (RamUsage, RamAvailable) values(?,?)");
-                query2.setLong(1, realTimeComputer.getRamUsage());
-                query2.setLong(2, realTimeComputer.getRamAvailable());
+                PreparedStatement query2 = conn.prepareStatement("insert into RamMemoryInf (idMachines, RamUsage, RamAvailable) values(?,?,?)");
+                query2.setInt(1, idMachine);
+                query2.setLong(2, realTimeComputer.getRamUsage());
+                query2.setLong(3, realTimeComputer.getRamAvailable());
                 query2.execute();
                 
-                PreparedStatement query3 = conn.prepareStatement("insert into TIMEUSAGEINF (TimeUsage) values(?)");
-                query3.setLong(1, realTimeComputer.getComputerUsageTime());
+                PreparedStatement query3 = conn.prepareStatement("insert into TIMEUSAGEINF (idMachines, TimeUsage) values(?,?)");
+                query3.setInt(1, idMachine);
+                query3.setLong(2, realTimeComputer.getComputerUsageTime());
                 query3.execute();
                 
-                PreparedStatement query4 = conn.prepareStatement("insert into HardDiskInf (HdTotal, HdUsage) values(?,?)");
-                query4.setLong(1, realTimeComputer.getHdTotal());
-                query4.setLong(2, realTimeComputer.getHdUsage());
+                PreparedStatement query4 = conn.prepareStatement("insert into HardDiskInf (idMachine, HdTotal, HdUsage) values(?,?,?)");
+                query4.setInt(1, idMachine);
+                query4.setLong(2, realTimeComputer.getHdTotal());
+                query4.setLong(3, realTimeComputer.getHdUsage());
                 query4.execute();                
         }catch(SQLException ex){
             disconnect(conn);

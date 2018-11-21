@@ -1,7 +1,6 @@
 package br.com.olimpia.athena;
 
-import static Interface.IController.hal;
-import static Interface.IController.os;
+import Screens.SelectArea;
 import br.com.olimpia.athena.handler.Computer;
 import Statements.MachinesRepository;
 import Statements.RealTimeMachinesRepository;
@@ -14,10 +13,11 @@ import oshi.util.FormatUtil;
 public class Main{
     public static void main(String[] args) throws InterruptedException, SQLException {
         
+        int idMachine = new SelectArea().getIdMachine();
         Computer info = new Computer();
         MachinesRepository repository = new MachinesRepository();
         Computer machine1= info.getComputerActual();
-        boolean insertresponse = repository.insertComputerActualStaticData(machine1);
+        boolean insertresponse = repository.insertComputerActualStaticData(machine1, idMachine);
         System.out.println(insertresponse);
         
         while(true){
@@ -44,9 +44,9 @@ public class Main{
         System.out.println("--------Processos------------------");
         System.out.println("Processos sendo executados na máquina: ");
         //System.out.println(info2.getComputerProcessesOshi(os, hal.getMemory()));
-  
+       
         RealTimeComputer machine2 = info2.getRealTimeComputer();
-        repository2.insertComputerActualData(machine2);
+        repository2.insertComputerActualData(machine2, idMachine);
         Thread.sleep(5000);
         }
     }

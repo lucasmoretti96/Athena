@@ -113,6 +113,7 @@ public class RealTimeComputer implements Interface.IController{
     public double getCpuUsagePorcentageOshi() {
         cpuUsagePorcentage = hal.getProcessor().getSystemCpuLoadBetweenTicks();
         cpuUsagePorcentage = cpuUsagePorcentage * 100;
+        Math.round(cpuUsagePorcentage);
 
         return cpuUsagePorcentage;
     }
