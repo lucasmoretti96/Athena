@@ -6,11 +6,14 @@
 package Screens;
 
 import Infra.ConnectionString;
+import br.com.olimpia.athena.Main;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -92,12 +95,20 @@ public class SelectArea extends javax.swing.JFrame {
         // TODO add your handling code here:
         Connection conn = new ConnectionString().createConnection();
         try{
-            PreparedStatement query = conn.prepareStatement("Select MachineName from Machines Where MachineName = ?");
+            PreparedStatement query = conn.prepareStatement("Select idMachines from Machines Where idMachines = ?");
             query.setString(1, jTextField1.getText());
             ResultSet result = query.executeQuery();
             if(result.next()){
                machineName = jTextField1.getText();
                idMachine = Integer.parseInt(machineName);
+                try {
+                    dispose();
+                    Working working = new Working();
+                    working.setVisible(true);
+                    call();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(SelectArea.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }else{
                 JOptionPane.showMessageDialog(rootPane, "ERRO!");
             }
@@ -146,6 +157,10 @@ public class SelectArea extends javax.swing.JFrame {
 
     public int getIdMachine() {
         return idMachine;
+    }
+    
+    public void call() throws InterruptedException, SQLException{
+       Main.main(null);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

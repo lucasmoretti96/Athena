@@ -106,8 +106,7 @@ public class LoginAdmin extends javax.swing.JFrame {
               query.setString(1, jTextField1.getText());
               query.setString(2, jTextField2.getText());
             ResultSet result = query.executeQuery();
-            if (result.next()){
-                System.out.println("OI");      
+            if (result.next()){      
                 dispose();
                 
                 SelectArea selectArea = new SelectArea();
