@@ -1,13 +1,6 @@
 package br.com.olimpia.athena.handler;
 
-import java.util.List;
-import java.util.Arrays;
-import oshi.hardware.GlobalMemory;
 import oshi.software.os.OSFileStore;
-import oshi.software.os.OSProcess;
-import oshi.software.os.OperatingSystem;
-import oshi.software.os.OperatingSystem.ProcessSort;
-import oshi.util.FormatUtil;
 
 public class RealTimeComputer implements Interface.IController{
     private long ramUsage;
@@ -28,7 +21,6 @@ public class RealTimeComputer implements Interface.IController{
             long ramAvailable, 
             double cpuUsagePorcentage, 
             double cpuTemperature,
-            OSFileStore[] hdsDetails,
             long hdTotal,
             long hdUsage){
         this.computerUsageTime = computerUsageTime;
@@ -36,7 +28,6 @@ public class RealTimeComputer implements Interface.IController{
         this.ramAvailable = ramAvailable;
         this.cpuUsagePorcentage = cpuUsagePorcentage;
         this.cpuTemperature = cpuTemperature;
-        this.hdsDetails = hdsDetails;
         this.hdTotal = hdTotal;
         this.hdUsage = hdUsage;
     }
@@ -47,7 +38,6 @@ public class RealTimeComputer implements Interface.IController{
                 getRamAvailableOshi(),
                 getCpuUsagePorcentageOshi(),
                 getCpuTemperatureOshi(),
-                getHDFilesStoresSizesOshi(),
                 getHdTotalOshi(),
                 getHdUsageOshi());
     }
@@ -120,39 +110,6 @@ public class RealTimeComputer implements Interface.IController{
     public double getCpuTemperatureOshi() {
         cpuTemperature = si.getHardware().getSensors().getCpuTemperature();
         return cpuTemperature;
-    }
-        public OSFileStore[] getHDFilesStoresSizesOshi() {
-        hdsDetails = os.getFileSystem().getFileStores();
-
-        for (OSFileStore fs : hdsDetails) {
-            long usable = fs.getUsableSpace();
-            long total = fs.getTotalSpace();
-            System.out.format(" %s (%s) [%s] %s of %s free (%.1f%%) \n",
-                    fs.getName(), fs.getDescription().isEmpty() ? "file system" : fs.getDescription(), fs.getType(),
-                    FormatUtil.formatBytes(usable), FormatUtil.formatBytes(fs.getTotalSpace()), 100d * usable / total);
-        }
-        return hdsDetails;
-    }
-       public List<OSProcess> getComputerProcessesOshi(OperatingSystem os, GlobalMemory memory) {
-        OSProcess p = new OSProcess();
-
-        System.out.println("Processes: " + os.getProcessCount() + ", Threads: " + os.getThreadCount());
-
-        List<OSProcess> procs = Arrays.asList(os.getProcesses(5, ProcessSort.CPU));
-
-        System.out.println("   PID  %CPU %MEM       VSZ       RSS Name");
-
-        for (int i = 0; i < procs.size() && i < 5; i++) {
-
-            p = procs.get(i);
-
-            System.out.format(" %5d %5.1f %4.1f %9s %9s %s%n", p.getProcessID(),
-                    100d * (p.getKernelTime() + p.getUserTime()) / p.getUpTime(),
-                    100d * p.getResidentSetSize() / memory.getTotal(), FormatUtil.formatBytes(p.getVirtualSize()),
-                    FormatUtil.formatBytes(p.getResidentSetSize()), p.getName());
-        }
-        //procs.toString();
-        return procs;
     }
        public long getHdTotalOshi(){
            OSFileStore[] fileStores = si.getOperatingSystem().getFileSystem().getFileStores();

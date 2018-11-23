@@ -6,7 +6,10 @@
 package Screens;
 
 import Infra.ConnectionString;
-import br.com.olimpia.athena.Main;
+import Statements.MachinesRepository;
+import Statements.RealTimeMachinesRepository;
+import br.com.olimpia.athena.handler.Computer;
+import br.com.olimpia.athena.handler.RealTimeComputer;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,7 +27,7 @@ public class SelectArea extends javax.swing.JFrame {
 
     private String machineName;
     private int idMachine;
-    
+
     public SelectArea() {
         initComponents();
     }
@@ -94,25 +97,37 @@ public class SelectArea extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
         Connection conn = new ConnectionString().createConnection();
-        try{
+        try {
             PreparedStatement query = conn.prepareStatement("Select idMachines from Machines Where idMachines = ?");
             query.setString(1, jTextField1.getText());
             ResultSet result = query.executeQuery();
-            if(result.next()){
-               machineName = jTextField1.getText();
-               idMachine = Integer.parseInt(machineName);
-                try {
-                    dispose();
-                    Working working = new Working();
-                    working.setVisible(true);
-                    call();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(SelectArea.class.getName()).log(Level.SEVERE, null, ex);
+            if (result.next()) {
+                setMachineName(jTextField1.getText());
+                setIdMachine(Integer.parseInt(machineName));
+                int idMachineReal = getIdMachine();
+                Computer info = new Computer();
+                MachinesRepository repository = new MachinesRepository();
+                Computer machine1 = info.getComputerActual();
+                repository.insertComputerActualStaticData(machine1, idMachineReal);
+
+                System.out.println(idMachineReal);
+                dispose();
+                Working working = new Working();
+                working.setVisible(true);
+                while (true) {
+                    RealTimeComputer info2 = new RealTimeComputer();
+                    RealTimeMachinesRepository repository2 = new RealTimeMachinesRepository();
+
+                    RealTimeComputer machine2 = info2.getRealTimeComputer();
+                    repository2.insertComputerActualData(machine2, idMachineReal);
+                    Thread.sleep(5000);
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(rootPane, "ERRO!");
             }
-        }catch(HeadlessException | SQLException e){
+        } catch (HeadlessException | SQLException e) {
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SelectArea.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -158,9 +173,13 @@ public class SelectArea extends javax.swing.JFrame {
     public int getIdMachine() {
         return idMachine;
     }
-    
-    public void call() throws InterruptedException, SQLException{
-       Main.main(null);
+
+    public void setMachineName(String machineName) {
+        this.machineName = machineName;
+    }
+
+    public void setIdMachine(int idMachine) {
+        this.idMachine = idMachine;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
