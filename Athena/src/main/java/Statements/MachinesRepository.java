@@ -13,7 +13,7 @@ public class MachinesRepository {
     public boolean insertComputerActualStaticData(Computer computer, int idMachine){
         try{
         Connection conn = new ConnectionString().createConnection();
-        PreparedStatement query = conn.prepareStatement("Update into Machines (CpuName,HdTotal,IP,RamTotal) values(?,?,?,?) Where idMachines = "+idMachine);
+        PreparedStatement query = conn.prepareStatement("Update Machines set CpuName = ?, HdTotal = ?, IP = ?, RamTotal = ? Where idMachines = "+idMachine);
         query.setString(1, computer.getCpuName());
         query.setString(2, computer.getHdTotal());
         query.setString(3, computer.getComputerIpAddress());
