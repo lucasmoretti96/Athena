@@ -32,6 +32,7 @@ public class SelectArea extends javax.swing.JFrame {
         initComponents();
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,11 +42,16 @@ public class SelectArea extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel2.setVisible(false);
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
+        jLabel2.setText("Enviando Dados...");
 
         jButton1.setText("Enviar Dados");
         jButton1.setToolTipText("");
@@ -62,31 +68,32 @@ public class SelectArea extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel1))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jTextField1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(134, 134, 134)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel1)))
-                        .addGap(0, 76, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel2))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(134, 134, 134)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(84, 84, 84)
+                .addGap(112, 112, 112)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(4, 4, 4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2))
+                .addGap(90, 90, 90)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel1.getAccessibleContext().setAccessibleName("Digite o número de patrimônio do computador a ser consultado:");
@@ -111,23 +118,35 @@ public class SelectArea extends javax.swing.JFrame {
                 repository.insertComputerActualStaticData(machine1, idMachineReal);
 
                 System.out.println(idMachineReal);
-                dispose();
-                Working working = new Working();
-                working.setVisible(true);
-                while (true) {
-                    RealTimeComputer info2 = new RealTimeComputer();
-                    RealTimeMachinesRepository repository2 = new RealTimeMachinesRepository();
-
-                    RealTimeComputer machine2 = info2.getRealTimeComputer();
-                    repository2.insertComputerActualData(machine2, idMachineReal);
-                    Thread.sleep(5000);
-                }
+                jLabel1.setVisible(false);
+                jTextField1.setVisible(false);
+                jButton1.setVisible(false);
+                jLabel2.setVisible(true);
+                
+                new Thread() {
+                    @Override
+                    public void run() {
+                        while (true) {
+                            try {
+                                RealTimeComputer info2 = new RealTimeComputer();
+                                RealTimeMachinesRepository repository2 = new RealTimeMachinesRepository();
+                                RealTimeComputer machine2 = info2.getRealTimeComputer();
+                                    repository2.insertComputerActualData(machine2, idMachineReal);
+                                Thread.sleep(5000);
+                            } catch (SQLException | InterruptedException ex) {
+                                Logger.getLogger(SelectArea.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                    
+                }.start();
+                
+                
             } else {
                 JOptionPane.showMessageDialog(rootPane, "ERRO!");
             }
         } catch (HeadlessException | SQLException e) {
-        } catch (InterruptedException ex) {
-            Logger.getLogger(SelectArea.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SelectArea.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -185,6 +204,7 @@ public class SelectArea extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
