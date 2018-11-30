@@ -117,8 +117,8 @@ public class RealTimeComputer implements Interface.IController{
        }
        public long getHdUsageOshi(){
            OSFileStore[] fileStores = si.getOperatingSystem().getFileSystem().getFileStores();
-           long total = fileStores[0].getTotalSpace() + fileStores[1].getTotalSpace();
-           long usage = fileStores[1].getUsableSpace() + fileStores[1].getUsableSpace();
+           long total = fileStores[0].getTotalSpace() + fileStores[0].getTotalSpace();
+           long usage = fileStores[0].getUsableSpace() + fileStores[0].getUsableSpace();
            hdUsage = (total-usage);
            return hdUsage;
        }

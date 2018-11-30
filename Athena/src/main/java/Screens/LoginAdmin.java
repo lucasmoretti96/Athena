@@ -1,9 +1,12 @@
 package Screens;
 
 import Infra.ConnectionString;
+import java.awt.Color;
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class LoginAdmin extends javax.swing.JFrame {
@@ -31,10 +34,17 @@ public class LoginAdmin extends javax.swing.JFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField1.setToolTipText("");
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(203, 137, 51));
         jButton1.setText("Entrar");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -47,8 +57,12 @@ public class LoginAdmin extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(203, 137, 51));
         jLabel1.setText("Login:");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(203, 137, 51));
         jLabel2.setText("Senha:");
 
         jPasswordField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -84,7 +98,7 @@ public class LoginAdmin extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -92,6 +106,7 @@ public class LoginAdmin extends javax.swing.JFrame {
         jTextField1.getAccessibleContext().setAccessibleName("Login");
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -115,10 +130,13 @@ public class LoginAdmin extends javax.swing.JFrame {
             }else{
                JOptionPane.showMessageDialog(rootPane, "ERRO!"); 
             }
-        }catch(Exception e){
-            e.printStackTrace();
+        }catch(HeadlessException | SQLException e){
         }
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.getContentPane().setBackground(Color.BLACK);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -148,10 +166,8 @@ public class LoginAdmin extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginAdmin().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new LoginAdmin().setVisible(true);
         });
     }
 

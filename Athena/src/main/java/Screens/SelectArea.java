@@ -10,6 +10,7 @@ import Statements.MachinesRepository;
 import Statements.RealTimeMachinesRepository;
 import br.com.olimpia.athena.handler.Computer;
 import br.com.olimpia.athena.handler.RealTimeComputer;
+import java.awt.Color;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -48,11 +49,19 @@ public class SelectArea extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel2.setVisible(false);
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 36)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(203, 137, 51));
         jLabel2.setText("Enviando Dados...");
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(203, 137, 51));
         jButton1.setText("Enviar Dados");
         jButton1.setToolTipText("");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -61,6 +70,8 @@ public class SelectArea extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(203, 137, 51));
         jLabel1.setText("Digite o número do patrimônio do computador a ser consultado:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -99,6 +110,7 @@ public class SelectArea extends javax.swing.JFrame {
         jLabel1.getAccessibleContext().setAccessibleName("Digite o número de patrimônio do computador a ser consultado:");
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
@@ -150,6 +162,10 @@ public class SelectArea extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.getContentPane().setBackground(Color.BLACK);
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -178,10 +194,8 @@ public class SelectArea extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SelectArea().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new SelectArea().setVisible(true);
         });
     }
 
