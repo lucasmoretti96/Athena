@@ -61,16 +61,19 @@ public class RealTimeComputer implements Interface.IController{
     public void setCpuTemperature(double cpuTemperature) {
         this.cpuTemperature = cpuTemperature;
     }
-        public long getRamUsage() {
+    
+    public long getRamUsage() {
         return ramUsage;
     }
 
     public void setRamUsage(long ramUsage) {
         this.ramUsage = ramUsage;
     }
+    
     public long getRamAvailable() {
         return ramAvailable;
     }
+    
     public long getComputerUsageTime() {
         return computerUsageTime;
     }
@@ -88,18 +91,22 @@ public class RealTimeComputer implements Interface.IController{
     public void setRamAvailable(long ramAvailable) {
         this.ramAvailable = ramAvailable;
     }
+    
      public long getComputerUsageTimeOshi() {
         computerUsageTime = hal.getProcessor().getSystemUptime();
         return computerUsageTime;
     }
+     
      public long getRamUsageOshi() {
         ramUsage = (hal.getMemory().getTotal() - hal.getMemory().getAvailable());
         return ramUsage;
     }
+     
     public long getRamAvailableOshi() {
         ramAvailable = hal.getMemory().getAvailable();
         return ramAvailable;
     }
+    
     public double getCpuUsagePorcentageOshi() {
         cpuUsagePorcentage = hal.getProcessor().getSystemCpuLoadBetweenTicks();
         cpuUsagePorcentage = cpuUsagePorcentage * 100;
@@ -107,6 +114,7 @@ public class RealTimeComputer implements Interface.IController{
 
         return cpuUsagePorcentage;
     }
+    
     public double getCpuTemperatureOshi() {
         cpuTemperature = si.getHardware().getSensors().getCpuTemperature();
         return cpuTemperature;
@@ -115,6 +123,7 @@ public class RealTimeComputer implements Interface.IController{
            OSFileStore[] fileStores = si.getOperatingSystem().getFileSystem().getFileStores();
            return hdTotal = fileStores[0].getTotalSpace() + fileStores[1].getTotalSpace();
        }
+       
        public long getHdUsageOshi(){
            OSFileStore[] fileStores = si.getOperatingSystem().getFileSystem().getFileStores();
            long total = fileStores[0].getTotalSpace() + fileStores[0].getTotalSpace();
