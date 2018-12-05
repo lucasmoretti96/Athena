@@ -77,7 +77,7 @@ public class LoginAdmin extends javax.swing.JFrame {
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\aluno\\Downloads\\athenalogogoldPQ.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\aluno\\Downloads\\Athena\\athenalogogoldPQ.png")); // NOI18N
         jLabel3.setToolTipText(null);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
