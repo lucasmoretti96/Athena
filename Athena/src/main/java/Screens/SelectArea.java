@@ -96,7 +96,6 @@ public class SelectArea extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\aluno\\Downloads\\Athena\\olimpiagoldPQ.png")); // NOI18N
         jLabel4.setToolTipText(null);
-        jLabel4.setPreferredSize(new java.awt.Dimension(120, 120));
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(116, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
