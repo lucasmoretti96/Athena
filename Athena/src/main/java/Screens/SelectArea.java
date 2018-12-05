@@ -12,10 +12,13 @@ import br.com.olimpia.athena.handler.Computer;
 import br.com.olimpia.athena.handler.RealTimeComputer;
 import java.awt.Color;
 import java.awt.HeadlessException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -144,7 +147,13 @@ public class SelectArea extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+  public Log arquivo = new Log();//
+    public OlimpiaSlack mensagem = new OlimpiaSlack();
 
+    String quebraLinha = System.getProperty("line.separator");//quebra linha
+    Date dataHoraAtual = new Date();//intancia um obj data e hr 
+    String data2 = new SimpleDateFormat("dd/MM/yyyy").format(dataHoraAtual);//dois objetos inseridos no log
+    String hora2 = new SimpleDateFormat(" HH:mm:ss").format(dataHoraAtual);
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
         Connection conn = new ConnectionString().createConnection();
@@ -175,19 +184,33 @@ public class SelectArea extends javax.swing.JFrame {
                                 RealTimeComputer info2 = new RealTimeComputer();
                                 RealTimeMachinesRepository repository2 = new RealTimeMachinesRepository();
                                 RealTimeComputer machine2 = info2.getRealTimeComputer();
-                                    repository2.insertComputerActualData(machine2, idMachineReal);
+                                repository2.insertComputerActualData(machine2, idMachineReal);
+                                arquivo.WriteLog(quebraLinha+" "+data2+" "+hora2+" - Patrimônio da máquina "+getMachineName()+" - ID "+getIdMachine());
+                                arquivo.WriteLog("------------------------------------------------");
                                 Thread.sleep(5000);
                             } catch (SQLException | InterruptedException ex) {
+                                Logger.getLogger(SelectArea.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (IOException ex) {
                                 Logger.getLogger(SelectArea.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     }
                     
                 }.start();
-                
+                try {
+                    mensagem.enviarMensagem(quebraLinha+" Houve um acesso na máquina de patrimônio "+getMachineName()+ " Seu ID é "+getIdMachine());
+                } catch (IOException ex) {
+                    Logger.getLogger(SelectArea.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
             } else {
                 JOptionPane.showMessageDialog(rootPane, "ERRO!");
+                try {
+                    arquivo.WriteLog("ERRO!"+quebraLinha+"Tentativa de consultar o patrimônio "+getTitle()+ " é inválido.");
+                    mensagem.enviarMensagem("ERRO!"+quebraLinha+"Tentativa de consultar a máquina inválido.");
+                } catch (IOException ex) {
+                    Logger.getLogger(SelectArea.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         } catch (HeadlessException | SQLException e) {
             Logger.getLogger(SelectArea.class.getName()).log(Level.SEVERE, null, e);
